@@ -1,9 +1,9 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native'
 import {connect} from 'react-redux'
-import {green, purple, red, white} from '../utils/colors'
+import {green, purple, red, white, gray} from '../utils/colors'
 import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
-import {NavigationActions} from 'react-navigation'
+import FlipCard from 'react-native-flip-card'
 
 class Quiz extends React.Component {
 
@@ -39,13 +39,6 @@ class Quiz extends React.Component {
         })
     }
 
-    flipCard = () => {
-        this.setState((state) => ({
-                isQuestionDisplayed: !state.isQuestionDisplayed
-            })
-        )
-    };
-
     handleCorrectAnswer = () => {
         this.setState((state) => ({
                 correctAnswers: state.correctAnswers + 1
@@ -69,7 +62,6 @@ class Quiz extends React.Component {
             { title: this.props.navigation.state.params.id,
                 ...this.props.navigation.state.params
             })
-        //this.props.navigation.goBack();
     };
 
     render() {
@@ -77,8 +69,7 @@ class Quiz extends React.Component {
         const {questions} = deck;
         const {
             currentQuestion,
-            correctAnswers,
-            isQuestionDisplayed
+            correctAnswers
         } = this.state;
 
         if (typeof correctAnswers === 'undefined') {
@@ -112,17 +103,17 @@ class Quiz extends React.Component {
         const item = questions[currentQuestion];
         return (
             <View style={styles.container}>
-                <View style={styles.item}>
-                    <Text>
-                        {isQuestionDisplayed ? item.question : item.answer}
-                    </Text>
-                </View>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={this.flipCard}
-                    underlayColor={white}>
-                    <Text style={styles.submitText}>Flip card</Text>
-                </TouchableOpacity>
+                <Text style={styles.howTo}>Click on the question to reveal the answer,
+                    and click it back to see the question again</Text>
+                <FlipCard style={styles.card}>
+                        <View style={styles.item}>
+                            <Text>{item.question}</Text>
+                        </View>
+
+                        <View style={styles.item}>
+                            <Text>{item.answer}</Text>
+                        </View>
+                </FlipCard>
 
                 <TouchableOpacity
                     style={[styles.button, {backgroundColor: green}]}
@@ -150,11 +141,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'stretch'
     },
-    item: {
+    card:{
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        alignItems:'center',
         backgroundColor: white,
         borderRadius: Platform.OS === 'ios' ? 16 : 1,
+        borderColor: 'transparent',
         padding: 20,
         marginLeft: 10,
         marginRight: 10,
@@ -167,6 +160,12 @@ const styles = StyleSheet.create({
             height: 3
         }
     },
+    item: {
+        marginBottom: 10
+    },
+    itemText: {
+        fontSize:20
+    },
     button: {
         marginRight: 40,
         marginLeft: 40,
@@ -176,6 +175,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         backgroundColor: purple,
         borderRadius: 10,
+        borderColor: 'transparent',
         borderWidth: 1,
         shadowRadius: 3,
         shadowOpacity: .8,
@@ -199,6 +199,12 @@ const styles = StyleSheet.create({
     descText: {
         fontSize: 30,
         textAlign: 'center'
+    },
+    howTo: {
+        fontSize: 16,
+        textAlign: 'center',
+        color: gray,
+        marginBottom: 10,
     }
 });
 

@@ -21,7 +21,7 @@ class CardCreate extends React.Component {
             question: '',
             answer: ''
         });
-        this.props.navigation.navigate('Deck', {title: title});
+        this.props.navigation.goBack()
     };
     handleQuestionChange = (value) => {
         this.setState({question: value})

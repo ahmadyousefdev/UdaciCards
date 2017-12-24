@@ -12,7 +12,7 @@ class DeckCreate extends React.Component {
 
     submit = () => {
         const {title} = this.state;
-        this.props.dispatch(addDeck(title));
+        this.props.addDeck(title);
         submitDeck(title);
         // Resetting the title to null
         this.setState({title: ''});
@@ -107,4 +107,4 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps)(DeckCreate)
+export default connect(mapStateToProps,{addDeck})(DeckCreate)
