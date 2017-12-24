@@ -28,6 +28,7 @@ class Quiz extends React.Component {
                 return {
                     currentQuestion: questions[nextQuestion],
                     questions: questions.filter((item, index) => index != nextQuestion),
+                    leftQuestions: questions.filter((item, index) => index != nextQuestion).length,
                     isQuestionDisplayed: true
                 }
             } else {
@@ -69,7 +70,8 @@ class Quiz extends React.Component {
         const {questions} = deck;
         const {
             currentQuestion,
-            correctAnswers
+            correctAnswers,
+            leftQuestions
         } = this.state;
 
         if (typeof correctAnswers === 'undefined') {
@@ -114,7 +116,9 @@ class Quiz extends React.Component {
                             <Text>{item.answer}</Text>
                         </View>
                 </FlipCard>
-
+                <Text style={styles.howTo}>
+                    Cards left: {leftQuestions}
+                </Text>
                 <TouchableOpacity
                     style={[styles.button, {backgroundColor: green}]}
                     onPress={this.handleCorrectAnswer}
