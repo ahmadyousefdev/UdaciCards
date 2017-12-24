@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, TextInput, StyleSheet, Platform} from 'react-native';
+import {KeyboardAvoidingView, Text, TouchableOpacity, TextInput, StyleSheet, Platform} from 'react-native';
 import {addCard} from '../actions'
 import {connect} from 'react-redux'
 import {addCardToDeck} from '../utils/api'
@@ -32,7 +32,7 @@ class CardCreate extends React.Component {
     render() {
         const {question, answer} = this.state;
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" scrollEnabled={false}>
                 <Text style={styles.text}>Add a new card to deck</Text>
                 <TextInput
                     placeholder="Write the question here"
@@ -54,7 +54,7 @@ class CardCreate extends React.Component {
                     underlayColor='#fff'>
                     <Text style={styles.submitText}>Create</Text>
                 </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

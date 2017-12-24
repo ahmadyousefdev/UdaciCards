@@ -1,39 +1,60 @@
-import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import React, {Component} from 'react'
+import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native'
 import { connect } from 'react-redux'
 import {purple, white} from '../utils/colors'
 
-function Deck({ deck, navigation }) {
+class Deck extends Component {
 
-    const { title, questions } = deck;
-    return (
-        <View style={styles.container}>
+    state = {
+        opacity: new Animated.Value(0),
+        width: new Animated.Value(0),
+        height: new Animated.Value(0)
+    };
 
-            <View style={styles.desc}>
-                <Text style={[styles.descText, {fontWeight: 'bold'}]}>{title}</Text>
-                <Text style={styles.descText}>Number of Cards : {questions.length}</Text>
-            </View>
+    componentDidMount() {
+        const {deck,navigation} = this.props;
+        const {opacity} = this.state;
+        Animated.timing(opacity, {toValue:1, duration: 1000}).start();
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('CardCreate', { title: title })}
-                underlayColor='#fff'>
-                <Text style={styles.submitText}>Add Card</Text>
-            </TouchableOpacity>
-            {questions.length > 0 ? <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('Quiz', { title: title })}
-                underlayColor='#fff'>
-                <Text style={styles.submitText}>Start Quiz</Text>
-            </TouchableOpacity> :
-            <Text style={styles.descText}>
-                Quiz is not available yet, you have to add cards first
-            </Text>
-            }
+        this.setState({
+            deck: deck,
+            navigation: navigation
+        });
+    }
+
+    render() {
+        const {deck,navigation} = this.props;
+        const { title, questions } = deck;
+        const {opacity} = this.state;
+        return (
+            <Animated.View style={[styles.container,{opacity}]}>
+
+                <View style={styles.desc}>
+                    <Text style={[styles.descText, {fontWeight: 'bold'}]}>{title}</Text>
+                    <Text style={styles.descText}>Number of Cards : {questions.length}</Text>
+                </View>
+
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('CardCreate', { title: title })}
+                    underlayColor='#fff'>
+                    <Text style={styles.submitText}>Add Card</Text>
+                </TouchableOpacity>
+                {questions.length > 0 ? <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Quiz', { title: title })}
+                        underlayColor='#fff'>
+                        <Text style={styles.submitText}>Start Quiz</Text>
+                    </TouchableOpacity> :
+                    <Text style={styles.descText}>
+                        Quiz is not available yet, you have to add cards first
+                    </Text>
+                }
 
 
-        </View>
-    )
+            </Animated.View>
+        )
+    }
 }
 
 function mapStateToProps(state, { navigation }) {

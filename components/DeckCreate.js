@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, TextInput, StyleSheet, Platform} from 'react-native';
+import {KeyboardAvoidingView, Text, TouchableOpacity, TextInput, StyleSheet, Platform} from 'react-native';
 import {connect} from 'react-redux'
 import {addDeck} from '../actions'
 import {submitDeck} from '../utils/api'
@@ -27,7 +27,7 @@ class DeckCreate extends React.Component {
         const {title} = this.state;
 
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <Text style={styles.text}>Please write the deck title</Text>
 
                 <TextInput
@@ -45,7 +45,7 @@ class DeckCreate extends React.Component {
                     <Text style={styles.submitText}>Create</Text>
                 </TouchableOpacity>
 
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

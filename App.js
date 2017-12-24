@@ -67,14 +67,13 @@ const MainNavigator = StackNavigator ({
     },
     DecksList: {
         screen: DecksList
-
     },
     Deck: {
         screen: Deck
 
     },
     DeckCreate: {
-        screen: DeckCreate
+        screen: DeckCreate,
 
     },
     CardCreate: {

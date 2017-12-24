@@ -26,7 +26,13 @@ class DecksList extends Component {
                     </View>
                     <View style={styles.deckContainer}>
                         <Text style={styles.title}>{title}</Text>
-                        <Text style={styles.CardsNumber}>Number of Cards: {questions.length}</Text>
+                        {
+                            questions.length > 0 ?
+                            <Text style={styles.CardsNumber}>Number of Cards: {questions.length}</Text>
+                            :
+                            <Text style={styles.CardsNumber}>You haven't created any decks yet.</Text>
+                        }
+
                     </View>
                 </View>
             </TouchableOpacity>

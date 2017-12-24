@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native'
 import {connect} from 'react-redux'
 import {green, purple, red, white} from '../utils/colors'
 import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
+import {NavigationActions} from 'react-navigation'
 
 class Quiz extends React.Component {
 
@@ -57,6 +58,20 @@ class Quiz extends React.Component {
         this.nextQuestion()
     };
 
+    restartQuiz = () => {
+        this.props.navigation.navigate('Quiz',
+            { id: this.props.navigation.state.params.id,
+                ...this.props.navigation.state.params});
+    };
+
+    goBackToDeck = () => {
+        this.props.navigation.navigate('Deck',
+            { title: this.props.navigation.state.params.id,
+                ...this.props.navigation.state.params
+            })
+        //this.props.navigation.goBack();
+    };
+
     render() {
         const {deck} = this.props;
         const {questions} = deck;
@@ -75,9 +90,21 @@ class Quiz extends React.Component {
                 <View style={styles.container}>
                     <View style={styles.desc}>
                         <Text style={[styles.descText, {fontWeight: 'bold'}]}>
-                            Your Score: {(correctAnswers/questions.length)*100} %
+                            Your Score: {(correctAnswers / questions.length) * 100} %
                         </Text>
                     </View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={this.restartQuiz}
+                        underlayColor={white}>
+                        <Text style={styles.submitText}>Restart</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={this.goBackToDeck}
+                        underlayColor={white}>
+                        <Text style={styles.submitText}>Go Back</Text>
+                    </TouchableOpacity>
                 </View>
             )
         }
@@ -174,6 +201,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
+
 function mapStateToProps(state, {navigation}) {
     const {title} = navigation.state.params;
     return {
@@ -181,4 +209,5 @@ function mapStateToProps(state, {navigation}) {
         deck: state[title]
     }
 }
+
 export default connect(mapStateToProps)(Quiz)

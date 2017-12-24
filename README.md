@@ -20,5 +20,10 @@ Then, you can start the app by running this command:
 npm start
 ```
 
+## This app is tested on
+1. iphone expo app
+2. XCode emulator
+3. android emulator
+
 ## licensing
 This is an applic project for [react nano degree](https://www.udacity.com/course/react-nanodegree--nd019) , you can find it useful to understand this project and the flow of this app. Don't present this project as your own, just learn from it if you want and make something amazing!ation
